@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>गणपती मूर्ती बुकिंग</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fbe9e7;
+      color: #333;
+    }
+    header {
+      background: #ff7043;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      padding: 15px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .container {
+      background: white;
+      margin: 15px;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #ff7043;
+    }
+    form input, form button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    form button {
+      background: #ff7043;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    form button:hover {
+      background: #e64a19;
+    }
+    .qr-section {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .qr-section img {
+      width: 150px;
+      border: 2px solid #ff7043;
+      border-radius: 10px;
+      padding: 5px;
+    }
+    .note {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>गणपती मूर्ती बुकिंग</header>
+
+  <section class="gallery">
+    <img src="murti1.jpg" alt="मूर्ती 1" onclick="selectMurti('मूर्ती 1')">
+    <img src="murti2.jpg" alt="मूर्ती 2" onclick="selectMurti('मूर्ती 2')">
+    <img src="murti3.jpg" alt="मूर्ती 3" onclick="selectMurti('मूर्ती 3')">
+    <img src="murti4.jpg" alt="मूर्ती 4" onclick="selectMurti('मूर्ती 4')">
+  </section>
+
+  <div class="container">
+    <h2>बुकिंग फॉर्म</h2>
+    <form id="bookingForm">
+      <input type="text" name="name" placeholder="नाव" required>
+      <input type="text" name="address" placeholder="पत्ता" required>
+      <input type="tel" name="mobile" placeholder="मोबाईल क्रमांक" required>
+      <input type="tel" name="altmobile" placeholder="पर्यायी क्रमांक">
+      <input type="text" name="murti" id="selectedMurti" placeholder="आवडलेली मूर्ती" required>
+      <input type="file" name="payment" required>
+      <button type="submit">बुकिंग सबमिट करा</button>
+    </form>
+
+    <div class="qr-section">
+      <p>पेमेंट करण्यासाठी QR कोड स्कॅन करा:</p>
+      <img src="qr-code.png" alt="QR कोड">
+    </div>
+
+    <p class="note">बुकिंग करण्यापूर्वी कॉल करून पुष्टी करा: 9049164048</p>
+  </div>
+
+  <script>
+    function selectMurti(murtiName) {
+      document.getElementById('selectedMurti').value = murtiName;
+    }
+
+    document.getElementById("bookingForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      var data = {
+        name: this.name.value,
+        address: this.address.value,
+        mobile: this.mobile.value,
+        altmobile: this.altmobile.value,
+        murti: this.murti.value,
+        payment: this.payment.value
+      };
+
+      fetch("https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec", {
+        method: "POST",
+        body: JSON.stringify(data)
+      }).then(() => {
+        alert("आपली बुकिंग यशस्वी झाली! गणपती बाप्पा मोरया!");
+        this.reset();
+      });
+    });
+  </script>
+</body>
+</html>
